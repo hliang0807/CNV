@@ -15,6 +15,8 @@ class ConFigNavigation(QObject):
 
     def goInputFile(self):
         self.mainContents.setCurrentIndex(1)
+        # self.navigation.left_label_2.setCheckabed(True)
 
     def goSetting(self):
         self.mainContents.setCurrentIndex(0)
+        # self.navigation.left_label_1.setCheckabed(True)

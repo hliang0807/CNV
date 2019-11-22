@@ -108,6 +108,14 @@ class Navigation(QScrollArea):
         self.left_label_4= QLabel()
         self.left_label_4.setObjectName('left_label')
 
+        # self.left_label_1.setCheckable(True)
+        # self.left_label_1.setChecked(True)
+        # self.left_label_1.setAutoExclusive(True)
+        # self.left_label_2.setAutoExclusive(True)
+        # self.left_label_3.setAutoExclusive(True)
+        # self.left_label_2.setCheckable(True)
+        # self.left_label_3.setCheckable(True)
+
 
 
     def setLayouts(self):

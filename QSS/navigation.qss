@@ -22,10 +22,15 @@ QPushButton#left_label{
         height:60px;
         font-weight:300;
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    }
+}
 
 
 QPushButton#left_label:hover{
     border-left:4px solid #999999;
     font-weight:300;
-    }
+}
+
+QPushButton:checked{
+    color:black;
+    background:white;
+}
