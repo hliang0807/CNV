@@ -1,0 +1,31 @@
+QWidget {
+    outline: none;
+    border: none;
+    background: #007c82;
+}
+
+
+QPushButton {
+    border:none;
+    color:white;
+    font-size:16px;
+}
+
+QLable {
+    border:none;
+    color:black;
+    font-size:16px;
+}
+
+QPushButton#left_label{
+        border:none;
+        height:60px;
+        font-weight:300;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+
+QPushButton#left_label:hover{
+    border-left:4px solid #999999;
+    font-weight:300;
+    }
