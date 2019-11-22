@@ -1,0 +1,41 @@
+QWidget{
+    outline: none;
+}
+
+QScrollArea {
+    border: none;
+}
+
+QPushButton{
+    width: 25px;
+}
+
+QPushButton#right_file_button{
+    font-size:16px;
+}
+
+QPushButton#pre_button{
+    background-color: #007c82;
+    color:white;
+    font-size: 24px;
+    text-align: center;
+}
+
+QPushButton#run_button{
+    background-color: #007c82;
+    color:white;
+    font-size: 24px;
+    text-align: center;
+}
+
+
+
+QLabel#right_step_lable{
+    font-size:16px;
+}
+
+QLabel#right_file_lable{
+    font-size:16px;
+}
+
+

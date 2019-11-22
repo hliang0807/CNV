@@ -7,12 +7,12 @@ import logging
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtWidgets import *
 # widgets
+from config.conFigMainShow import ConFigNavigation
 from designer.base import (QApplication, cacheFolder, QDialog, QFrame, QHBoxLayout, HBoxLayout, QIcon, QLabel, QListWidget, QListWidgetItem,
                   QPushButton, PicLabel, QScrollArea, ScrollArea, Qt, QTabWidget, TableWidget, QVBoxLayout, VBoxLayout,
                   QWidget)
 from designer.selectInputFile import SelectInputFile
 from designer.step2 import Step2
-from designer.step3 import Step3
 from designer.systemTray import SystemTray
 
 
@@ -36,9 +36,8 @@ class Window(QMainWindow):
 
         self.navigation = Navigation(self)
         self.mainContent = MainContent(self)
-        self.step1 = SelectInputFile(self)
+        self.selectInputFile = SelectInputFile(self)
         self.step2 = Step2(self)
-        self.step3 = Step3(self)
 
         self.mainContents = QTabWidget()
         self.mainContents.tabBar().setObjectName("mainTab")
@@ -60,22 +59,21 @@ class Window(QMainWindow):
         """设置tab界面。"""
         # 将需要切换的窗口做成Tab，并隐藏tabBar，这样方便切换，并且可以做前进后退功能。
         self.mainContents.addTab(self.mainContent, '')
-        self.mainContents.addTab(self.step1, '')
+        self.mainContents.addTab(self.selectInputFile, '')
         self.mainContents.addTab(self.step2, '')
-        self.mainContents.addTab(self.step3, '')
         self.mainContents.setCurrentIndex(0)
 
     def setLayouts(self):
         self.main_layout.addWidget(self.navigation,0,0,12,2)
-        self.main_layout.setContentsMargins(0, 0, 0, 0)
         self.main_layout.addWidget(self.mainContents,0,2,12,8)
         self.main_layout.setContentsMargins(0, 0, 0, 0)
-        self.main_layout.setHorizontalSpacing(0);
+        self.main_layout.setHorizontalSpacing(0)
         self.setCentralWidget(self.main_widget)
 
     # 注册所有功能。
     def configFeatures(self):
-        pass
+        self.navigation.config=ConFigNavigation(self.navigation)
+
 
 
 
@@ -105,9 +103,9 @@ class Navigation(QScrollArea):
         self.left_label_1.setObjectName('left_label')
         self.left_label_2 = QPushButton("选择文件")
         self.left_label_2.setObjectName('left_label')
-        self.left_label_3 = QPushButton("提交")
+        self.left_label_3 = QPushButton("反馈与帮助")
         self.left_label_3.setObjectName('left_label')
-        self.left_label_4= QPushButton("")
+        self.left_label_4= QLabel()
         self.left_label_4.setObjectName('left_label')
 
 
@@ -115,19 +113,25 @@ class Navigation(QScrollArea):
     def setLayouts(self):
         """设置布局。"""
         self.left_layout = QGridLayout(self.left_widget)  # 创建左侧部件的网格布局层
-        self.left_layout.addWidget(self.left_label_1,2,0,2,2)
-        self.left_layout.addWidget(self.left_label_2,3,0,3,2)
-        self.left_layout.addWidget(self.left_label_3,4,0,4,2)
-        self.left_layout.setContentsMargins(0, 0, 0, 0)
-        self.left_layout.addWidget(self.left_label_4, 12, 0, 12, 2)
+        self.left_layout.addWidget(self.left_label_1,0,0,1,2)
+        self.left_layout.addWidget(self.left_label_2,1,0,1,2)
+        self.left_layout.addWidget(self.left_label_3,3,0,1,2)
+        self.left_layout.addWidget(self.left_label_4, 4, 0, 1, 2)
+        self.left_layout.setRowStretch(0, 2)
+        self.left_layout.setRowStretch(1, 2)
+        self.left_layout.setRowStretch(2, 9)
+        self.left_layout.setRowStretch(3, 2)
+        self.left_layout.setRowStretch(4, 1)
+
+
+
 
 
 
 
 # 主要内容区
 class MainContent(ScrollArea):
-    # 定义一个滑到了最低部的信号。
-    # 方便子控件得知已经滑到了最底部，要做些加载的动作。
+
 
     def __init__(self, parent=None):
         """主内容区"""
@@ -190,47 +194,87 @@ class MainContent(ScrollArea):
         self.right_line8.setValidator(QtGui.QIntValidator())
         self.right_line8.setObjectName('right_line')
 
-        self.space_button1=QPushButton()
-        self.space_button2 = QPushButton()
-        self.space_button3 = QPushButton()
-        self.space_button4 = QPushButton()
-        self.space_button5 = QPushButton()
-        self.space_button6 = QPushButton()
-        self.next_button =  QPushButton("next")
+        self.space1 = QLabel()
+        self.space2 = QLabel()
+        self.space3 = QLabel()
+        self.space4 = QLabel()
+        self.space5 = QLabel()
+        self.space6 = QLabel()
+        self.space7 = QLabel()
+        self.space8 = QLabel()
+        self.space9 = QLabel()
+        self.space10 = QLabel()
+        self.space11 = QLabel()
+        self.space12 = QLabel()
+
+        self.next_button =  QPushButton("下一步")
         self.next_button.setObjectName('next_button')
 
     #定义布局
     def setLayouts(self):
-
         self.mainLayout = QGridLayout(self.right_widget)
         self.right_label_layout=QGridLayout()
         self.right_label_widget = QWidget()
         self.right_label_widget.setLayout(self.right_label_layout)
-        self.right_label_layout.addWidget(self.right_lable1,0,1,1,1)
-        self.right_label_layout.addWidget(self.right_lable2,1,1,1,1)
-        self.right_label_layout.addWidget(self.right_lable3, 2, 1, 1, 1)
-        self.right_label_layout.addWidget(self.right_lable4, 3, 1, 1, 1)
-        self.right_label_layout.addWidget(self.right_lable5, 4,1,1,1)
-        self.right_label_layout.addWidget(self.right_lable6, 5,1,1,1)
-        self.right_label_layout.addWidget(self.right_lable7, 6,1,1,1)
-        self.right_label_layout.addWidget(self.right_lable8, 7,1,1,1)
+        self.right_label_layout.addWidget(self.right_lable1, 1,1,1,1)
+        self.right_label_layout.addWidget(self.right_lable2, 3,1,1,1)
+        self.right_label_layout.addWidget(self.right_lable3, 5, 1, 1, 1)
+        self.right_label_layout.addWidget(self.right_lable4, 7, 1, 1, 1)
+        self.right_label_layout.addWidget(self.right_lable5, 9,1,1,1)
+        self.right_label_layout.addWidget(self.right_lable6, 11,1,1,1)
+        self.right_label_layout.addWidget(self.right_lable7, 13,1,1,1)
+        self.right_label_layout.addWidget(self.right_lable8, 15,1,1,1)
 
-        self.right_label_layout.addWidget(self.right_line1, 0, 2, 1, 1)
-        self.right_label_layout.addWidget(self.right_line2, 1, 2, 1, 1)
-        self.right_label_layout.addWidget(self.right_line3, 2, 2, 1, 1)
-        self.right_label_layout.addWidget(self.right_line4, 3, 2, 1, 1)
-        self.right_label_layout.addWidget(self.right_line5, 4, 2, 1, 1)
-        self.right_label_layout.addWidget(self.right_line6, 5, 2, 1, 1)
-        self.right_label_layout.addWidget(self.right_line7, 6, 2, 1, 1)
-        self.right_label_layout.addWidget(self.right_line8, 7, 2, 1, 1)
+        self.right_label_layout.addWidget(self.right_line1, 1, 2, 1, 1)
+        self.right_label_layout.addWidget(self.right_line2, 3, 2, 1, 1)
+        self.right_label_layout.addWidget(self.right_line3, 5, 2, 1, 1)
+        self.right_label_layout.addWidget(self.right_line4, 7, 2, 1, 1)
+        self.right_label_layout.addWidget(self.right_line5, 9, 2, 1, 1)
+        self.right_label_layout.addWidget(self.right_line6, 11, 2, 1, 1)
+        self.right_label_layout.addWidget(self.right_line7, 13, 2, 1, 1)
+        self.right_label_layout.addWidget(self.right_line8, 15, 2, 1, 1)
+        self.right_label_layout.addWidget(self.next_button, 17, 4, 1, 1)
 
-        self.right_label_layout.addWidget(self.next_button, 8, 4, 1, 1)
-        self.right_label_layout.setColumnStretch(0,1)
+
+        self.right_label_layout.addWidget(self.space1, 0, 0, 1, 1)
+        self.right_label_layout.addWidget(self.space2, 2, 0, 1, 1)
+        self.right_label_layout.addWidget(self.space3, 4, 0, 1, 1)
+        self.right_label_layout.addWidget(self.space4, 6, 0, 1, 1)
+        self.right_label_layout.addWidget(self.space5, 8, 0, 1, 1)
+        self.right_label_layout.addWidget(self.space6, 10, 0, 1, 1)
+        self.right_label_layout.addWidget(self.space8, 12, 0, 1, 1)
+        self.right_label_layout.addWidget(self.space8, 14, 0, 1, 1)
+        self.right_label_layout.addWidget(self.space9, 16, 0, 1, 1)
+        self.right_label_layout.addWidget(self.space10, 17, 5, 1, 1)
+        self.right_label_layout.addWidget(self.space11, 17, 3, 1, 1)
+
+        self.right_label_layout.setColumnStretch(0, 1)
         self.right_label_layout.setColumnStretch(1, 2)
-        self.right_label_layout.setColumnStretch(2, 2)
-        self.right_label_layout.setColumnStretch(3, 2)
-        self.right_label_layout.setColumnStretch(4, 1)
-        self.right_label_layout.setVerticalSpacing(30)
+        self.right_label_layout.setColumnStretch(2, 1)
+        self.right_label_layout.setColumnStretch(3, 1)
+        self.right_label_layout.setColumnStretch(4, 1.5)
+        self.right_label_layout.setColumnStretch(5, 0.5)
+
+        self.right_label_layout.setRowStretch(0, 4)
+        self.right_label_layout.setRowStretch(1, 1)
+        self.right_label_layout.setRowStretch(2, 1)
+        self.right_label_layout.setRowStretch(3, 1)
+        self.right_label_layout.setRowStretch(4, 1)
+        self.right_label_layout.setRowStretch(5, 1)
+        self.right_label_layout.setRowStretch(6, 1)
+        self.right_label_layout.setRowStretch(7, 1)
+        self.right_label_layout.setRowStretch(8, 1)
+        self.right_label_layout.setRowStretch(9, 1)
+        self.right_label_layout.setRowStretch(10, 1)
+        self.right_label_layout.setRowStretch(11, 1)
+        self.right_label_layout.setRowStretch(12, 1)
+        self.right_label_layout.setRowStretch(13, 1)
+        self.right_label_layout.setRowStretch(14, 1)
+        self.right_label_layout.setRowStretch(15, 1)
+        self.right_label_layout.setRowStretch(16, 4)
+        self.right_label_layout.setRowStretch(17, 4)
+
+
 
         self.mainLayout.setContentsMargins(0, 0, 0, 0)
         self.mainLayout.addWidget(self.right_label_widget,1,1,8,4)
