@@ -8,14 +8,14 @@ from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtWidgets import *
 # widgets
 from config.conFigMainShow import ConFigNavigation
-from designer.base import (QApplication, cacheFolder, QDialog, QFrame, QHBoxLayout, HBoxLayout, QIcon, QLabel, QListWidget, QListWidgetItem,
-                  QPushButton, PicLabel, QScrollArea, ScrollArea, Qt, QTabWidget, TableWidget, QVBoxLayout, VBoxLayout,
-                  QWidget)
+from designer.base import (QApplication, cacheFolder, QDialog, QFrame, QHBoxLayout, HBoxLayout, QIcon, QLabel,
+                           QListWidget, QListWidgetItem,
+                           QPushButton, PicLabel, QScrollArea, ScrollArea, Qt, QTabWidget, TableWidget, QVBoxLayout,
+                           VBoxLayout,
+                           QWidget)
 from designer.selectInputFile import SelectInputFile
 from designer.step2 import Step2
 from designer.systemTray import SystemTray
-
-
 
 
 # 用于承载整个界面。所有窗口的父窗口，所有窗口都可以在父窗口里找到索引。
@@ -52,8 +52,6 @@ class Window(QMainWindow):
         with open('QSS/window.qss', 'r') as f:
             self.setStyleSheet(f.read())
 
-
-
     # 布局。
     def setContents(self):
         """设置tab界面。"""
@@ -64,17 +62,15 @@ class Window(QMainWindow):
         self.mainContents.setCurrentIndex(0)
 
     def setLayouts(self):
-        self.main_layout.addWidget(self.navigation,0,0,12,2)
-        self.main_layout.addWidget(self.mainContents,0,2,12,8)
+        self.main_layout.addWidget(self.navigation, 0, 0, 12, 2)
+        self.main_layout.addWidget(self.mainContents, 0, 2, 12, 8)
         self.main_layout.setContentsMargins(0, 0, 0, 0)
         self.main_layout.setHorizontalSpacing(0)
         self.setCentralWidget(self.main_widget)
 
     # 注册所有功能。
     def configFeatures(self):
-        self.navigation.config=ConFigNavigation(self.navigation)
-
-
+        self.navigation.config = ConFigNavigation(self.navigation)
 
 
 # 左侧的导航栏
@@ -86,7 +82,6 @@ class Navigation(QScrollArea):
         self.setWidget(self.left_widget)
         self.setWidgetResizable(True)
         self.setObjectName('left_widget')
-
 
         with open('QSS/navigation.qss', 'r') as f:
             style = f.read()
@@ -105,7 +100,7 @@ class Navigation(QScrollArea):
         self.left_label_2.setObjectName('left_label')
         self.left_label_3 = QPushButton("反馈与帮助")
         self.left_label_3.setObjectName('left_label')
-        self.left_label_4= QLabel()
+        self.left_label_4 = QLabel()
         self.left_label_4.setObjectName('left_label')
 
         # self.left_label_1.setCheckable(True)
@@ -116,14 +111,12 @@ class Navigation(QScrollArea):
         # self.left_label_2.setCheckable(True)
         # self.left_label_3.setCheckable(True)
 
-
-
     def setLayouts(self):
         """设置布局。"""
         self.left_layout = QGridLayout(self.left_widget)  # 创建左侧部件的网格布局层
-        self.left_layout.addWidget(self.left_label_1,0,0,1,2)
-        self.left_layout.addWidget(self.left_label_2,1,0,1,2)
-        self.left_layout.addWidget(self.left_label_3,3,0,1,2)
+        self.left_layout.addWidget(self.left_label_1, 0, 0, 1, 2)
+        self.left_layout.addWidget(self.left_label_2, 1, 0, 1, 2)
+        self.left_layout.addWidget(self.left_label_3, 3, 0, 1, 2)
         self.left_layout.addWidget(self.left_label_4, 4, 0, 1, 2)
         self.left_layout.setRowStretch(0, 2)
         self.left_layout.setRowStretch(1, 2)
@@ -132,14 +125,8 @@ class Navigation(QScrollArea):
         self.left_layout.setRowStretch(4, 1)
 
 
-
-
-
-
-
 # 主要内容区
 class MainContent(ScrollArea):
-
 
     def __init__(self, parent=None):
         """主内容区"""
@@ -159,6 +146,7 @@ class MainContent(ScrollArea):
         self.setLayouts()
 
         # 布局
+
     def setLabels(self):
         self.right_lable1 = QPushButton("mapping quality")
         self.right_lable1.setObjectName('right_lable')
@@ -215,23 +203,23 @@ class MainContent(ScrollArea):
         self.space11 = QLabel()
         self.space12 = QLabel()
 
-        self.next_button =  QPushButton("下一步")
+        self.next_button = QPushButton("下一步")
         self.next_button.setObjectName('next_button')
 
-    #定义布局
+    # 定义布局
     def setLayouts(self):
         self.mainLayout = QGridLayout(self.right_widget)
-        self.right_label_layout=QGridLayout()
+        self.right_label_layout = QGridLayout()
         self.right_label_widget = QWidget()
         self.right_label_widget.setLayout(self.right_label_layout)
-        self.right_label_layout.addWidget(self.right_lable1, 1,1,1,1)
-        self.right_label_layout.addWidget(self.right_lable2, 3,1,1,1)
+        self.right_label_layout.addWidget(self.right_lable1, 1, 1, 1, 1)
+        self.right_label_layout.addWidget(self.right_lable2, 3, 1, 1, 1)
         self.right_label_layout.addWidget(self.right_lable3, 5, 1, 1, 1)
         self.right_label_layout.addWidget(self.right_lable4, 7, 1, 1, 1)
-        self.right_label_layout.addWidget(self.right_lable5, 9,1,1,1)
-        self.right_label_layout.addWidget(self.right_lable6, 11,1,1,1)
-        self.right_label_layout.addWidget(self.right_lable7, 13,1,1,1)
-        self.right_label_layout.addWidget(self.right_lable8, 15,1,1,1)
+        self.right_label_layout.addWidget(self.right_lable5, 9, 1, 1, 1)
+        self.right_label_layout.addWidget(self.right_lable6, 11, 1, 1, 1)
+        self.right_label_layout.addWidget(self.right_lable7, 13, 1, 1, 1)
+        self.right_label_layout.addWidget(self.right_lable8, 15, 1, 1, 1)
 
         self.right_label_layout.addWidget(self.right_line1, 1, 2, 1, 1)
         self.right_label_layout.addWidget(self.right_line2, 3, 2, 1, 1)
@@ -242,7 +230,6 @@ class MainContent(ScrollArea):
         self.right_label_layout.addWidget(self.right_line7, 13, 2, 1, 1)
         self.right_label_layout.addWidget(self.right_line8, 15, 2, 1, 1)
         self.right_label_layout.addWidget(self.next_button, 17, 4, 1, 1)
-
 
         self.right_label_layout.addWidget(self.space1, 0, 0, 1, 1)
         self.right_label_layout.addWidget(self.space2, 2, 0, 1, 1)
@@ -282,14 +269,12 @@ class MainContent(ScrollArea):
         self.right_label_layout.setRowStretch(16, 4)
         self.right_label_layout.setRowStretch(17, 4)
 
-
-
         self.mainLayout.setContentsMargins(0, 0, 0, 0)
-        self.mainLayout.addWidget(self.right_label_widget,1,1,8,4)
-
+        self.mainLayout.addWidget(self.right_label_widget, 1, 1, 8, 4)
 
 
 def start():
+    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
     app = QApplication(sys.argv)
     main = Window()
     main.show()

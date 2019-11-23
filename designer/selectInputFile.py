@@ -1,7 +1,8 @@
 from designer.base import (ScrollArea, QLabel, QFrame, QVBoxLayout, QPushButton, QHBoxLayout, QTableWidget,
-                  QAbstractItemView)
+                           QAbstractItemView)
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtWidgets import *
+
 
 class SelectInputFile(ScrollArea):
     def __init__(self, parent=None):
@@ -22,10 +23,11 @@ class SelectInputFile(ScrollArea):
         self.setLayouts()
 
         # 布局
+
     def setLabels(self):
         self.file_button1 = QPushButton("浏览...")
         self.file_button1.setObjectName('right_file_button')
-        self.file_lable1 =QLabel("第一步：导入正常样本的bam文件")
+        self.file_lable1 = QLabel("第一步：导入正常样本的bam文件")
         self.file_lable1.setObjectName('right_step_lable')
         self.file_path1 = QLabel("未选择文件")
         self.file_path1.setObjectName('right_file_lable')
@@ -55,12 +57,12 @@ class SelectInputFile(ScrollArea):
         self.file_path4 = QLabel("未选择文件")
         self.file_path4.setObjectName('right_file_lable')
 
-        self.file_text3=QTextEdit()
+        self.file_text3 = QTextEdit()
         self.file_text3.setObjectName("right_file_text")
         self.file_text4 = QTextEdit()
         self.file_text4.setObjectName("right_file_text")
 
-        self.pre_button=QPushButton("上一步")
+        self.pre_button = QPushButton("上一步")
         self.pre_button.setObjectName("pre_button")
         self.run_button = QPushButton("运行")
         self.run_button.setObjectName("run_button")
@@ -69,15 +71,14 @@ class SelectInputFile(ScrollArea):
         self.space2 = QLabel()
         self.space3 = QLabel()
 
-
-    #定义布局
+    # 定义布局
     def setLayouts(self):
         self.mainLayout = QGridLayout(self.inputFile_widget)
         self.right_fileList_layout = QGridLayout()
         self.right_fileList_widget = QWidget()
         self.right_fileList_widget.setLayout(self.right_fileList_layout)
-        self.right_fileList_layout.addWidget(self.file_lable1,0,1,1,3)
-        self.right_fileList_layout.addWidget(self.file_button1,1,1,1,1)
+        self.right_fileList_layout.addWidget(self.file_lable1, 0, 1, 1, 3)
+        self.right_fileList_layout.addWidget(self.file_button1, 1, 1, 1, 1)
         self.right_fileList_layout.addWidget(self.file_path1, 1, 2, 1, 3)
 
         self.right_fileList_layout.addWidget(self.file_lable2, 3, 1, 1, 3)
@@ -126,10 +127,3 @@ class SelectInputFile(ScrollArea):
         self.right_fileList_layout.addWidget(self.run_button, 14, 5, 1, 1)
         self.mainLayout.setContentsMargins(0, 0, 0, 0)
         self.mainLayout.addWidget(self.right_fileList_widget, 0, 0, 12, 9)
-
-
-
-
-
-
-
