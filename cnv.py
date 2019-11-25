@@ -7,7 +7,7 @@ import logging
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtWidgets import *
 # widgets
-from config.conFigMainShow import ConFigNavigation
+from config.conFigMainShow import ConFigNavigation,ConfigInputFrame,ConfigSettingFrame
 from designer.base import (QApplication, cacheFolder, QDialog, QFrame, QHBoxLayout, HBoxLayout, QIcon, QLabel,
                            QListWidget, QListWidgetItem,
                            QPushButton, PicLabel, QScrollArea, ScrollArea, Qt, QTabWidget, TableWidget, QVBoxLayout,
@@ -70,7 +70,9 @@ class Window(QMainWindow):
 
     # 注册所有功能。
     def configFeatures(self):
-        self.navigation.config = ConFigNavigation(self.navigation)
+        self.navigationConfig = ConFigNavigation(self.navigation)
+        self.configInputFrame = ConfigInputFrame(self.selectInputFile)
+        self.configSetting = ConfigSettingFrame(self.mainContent)
 
 
 # 左侧的导航栏
@@ -150,7 +152,7 @@ class MainContent(ScrollArea):
     def setLabels(self):
         self.right_lable1 = QPushButton("mapping quality")
         self.right_lable1.setObjectName('right_lable')
-        self.right_lable2 = QPushButton("外显子大小")
+        self.right_lable2 = QPushButton("外显子长度")
         self.right_lable2.setObjectName('right_lable')
         self.right_lable3 = QPushButton("gc含量下限(%)")
         self.right_lable3.setObjectName('right_lable')
@@ -164,31 +166,46 @@ class MainContent(ScrollArea):
         self.right_lable7.setObjectName('right_lable')
         self.right_lable8 = QPushButton("合并外显子")
         self.right_lable8.setObjectName('right_lable')
+        self.right_lable9 = QPushButton("进程数量")
+        self.right_lable9.setObjectName('right_lable')
 
-        self.right_line1 = QLineEdit("20(default)")
+
+        self.right_line1 = QLineEdit()
+        self.right_line1.setPlaceholderText("20(default)")
         self.right_line1.setValidator(QtGui.QIntValidator())
         self.right_line1.setObjectName('right_line')
-        self.right_line2 = QLineEdit("20(default)")
+        self.right_line2 = QLineEdit()
+        self.right_line2.setPlaceholderText("20(default)")
         self.right_line2.setValidator(QtGui.QIntValidator())
         self.right_line2.setObjectName('right_line')
-        self.right_line3 = QLineEdit("10(default)")
+        self.right_line3 = QLineEdit()
+        self.right_line3.setPlaceholderText("10(default)")
         self.right_line3.setValidator(QtGui.QIntValidator())
         self.right_line3.setObjectName('right_line')
-        self.right_line4 = QLineEdit("90(default)")
+        self.right_line4 = QLineEdit()
+        self.right_line4.setPlaceholderText("90(default)")
         self.right_line4.setValidator(QtGui.QIntValidator())
         self.right_line4.setObjectName('right_line')
-        self.right_line5 = QLineEdit("20(default)")
+        self.right_line5 = QLineEdit()
+        self.right_line5.setPlaceholderText("20(default)")
         self.right_line5.setValidator(QtGui.QIntValidator())
         self.right_line5.setObjectName('right_line')
-        self.right_line6 = QLineEdit("3(default)")
+        self.right_line6 = QLineEdit()
+        self.right_line6.setPlaceholderText("3(default)")
         self.right_line6.setValidator(QtGui.QIntValidator())
         self.right_line6.setObjectName('right_line')
-        self.right_line7 = QLineEdit("50(default)")
+        self.right_line7 = QLineEdit()
+        self.right_line7.setPlaceholderText("50(default)")
         self.right_line7.setValidator(QtGui.QIntValidator())
         self.right_line7.setObjectName('right_line')
-        self.right_line8 = QLineEdit("3(default)")
+        self.right_line8 = QLineEdit()
+        self.right_line8.setPlaceholderText("3(default)")
         self.right_line8.setValidator(QtGui.QIntValidator())
         self.right_line8.setObjectName('right_line')
+        self.right_line9 = QLineEdit()
+        self.right_line9.setPlaceholderText("1(default)")
+        self.right_line9.setValidator(QtGui.QIntValidator())
+        self.right_line9.setObjectName('right_line')
 
         self.space1 = QLabel()
         self.space2 = QLabel()
@@ -220,6 +237,7 @@ class MainContent(ScrollArea):
         self.right_label_layout.addWidget(self.right_lable6, 11, 1, 1, 1)
         self.right_label_layout.addWidget(self.right_lable7, 13, 1, 1, 1)
         self.right_label_layout.addWidget(self.right_lable8, 15, 1, 1, 1)
+        self.right_label_layout.addWidget(self.right_lable9, 17, 1, 1, 1)
 
         self.right_label_layout.addWidget(self.right_line1, 1, 2, 1, 1)
         self.right_label_layout.addWidget(self.right_line2, 3, 2, 1, 1)
@@ -229,7 +247,8 @@ class MainContent(ScrollArea):
         self.right_label_layout.addWidget(self.right_line6, 11, 2, 1, 1)
         self.right_label_layout.addWidget(self.right_line7, 13, 2, 1, 1)
         self.right_label_layout.addWidget(self.right_line8, 15, 2, 1, 1)
-        self.right_label_layout.addWidget(self.next_button, 17, 4, 1, 1)
+        self.right_label_layout.addWidget(self.right_line9, 17, 2, 1, 1)
+        self.right_label_layout.addWidget(self.next_button, 19, 4, 1, 1)
 
         self.right_label_layout.addWidget(self.space1, 0, 0, 1, 1)
         self.right_label_layout.addWidget(self.space2, 2, 0, 1, 1)
@@ -240,8 +259,8 @@ class MainContent(ScrollArea):
         self.right_label_layout.addWidget(self.space8, 12, 0, 1, 1)
         self.right_label_layout.addWidget(self.space8, 14, 0, 1, 1)
         self.right_label_layout.addWidget(self.space9, 16, 0, 1, 1)
-        self.right_label_layout.addWidget(self.space10, 17, 5, 1, 1)
-        self.right_label_layout.addWidget(self.space11, 17, 3, 1, 1)
+        self.right_label_layout.addWidget(self.space10, 19, 5, 1, 1)
+        self.right_label_layout.addWidget(self.space11, 19, 3, 1, 1)
 
         self.right_label_layout.setColumnStretch(0, 1)
         self.right_label_layout.setColumnStretch(1, 2)
@@ -250,7 +269,7 @@ class MainContent(ScrollArea):
         self.right_label_layout.setColumnStretch(4, 1.5)
         self.right_label_layout.setColumnStretch(5, 0.5)
 
-        self.right_label_layout.setRowStretch(0, 4)
+        self.right_label_layout.setRowStretch(0, 2)
         self.right_label_layout.setRowStretch(1, 1)
         self.right_label_layout.setRowStretch(2, 1)
         self.right_label_layout.setRowStretch(3, 1)
@@ -266,11 +285,13 @@ class MainContent(ScrollArea):
         self.right_label_layout.setRowStretch(13, 1)
         self.right_label_layout.setRowStretch(14, 1)
         self.right_label_layout.setRowStretch(15, 1)
-        self.right_label_layout.setRowStretch(16, 4)
-        self.right_label_layout.setRowStretch(17, 4)
+        self.right_label_layout.setRowStretch(16, 1)
+        self.right_label_layout.setRowStretch(17, 1)
+        self.right_label_layout.setRowStretch(18, 3)
+        self.right_label_layout.setRowStretch(19, 4)
 
         self.mainLayout.setContentsMargins(0, 0, 0, 0)
-        self.mainLayout.addWidget(self.right_label_widget, 1, 1, 8, 4)
+        self.mainLayout.addWidget(self.right_label_widget, 1, 1, 19, 4)
 
 
 def start():
