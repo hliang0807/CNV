@@ -13,8 +13,8 @@ from designer.base import (QApplication, cacheFolder, QDialog, QFrame, QHBoxLayo
                            QPushButton, PicLabel, QScrollArea, ScrollArea, Qt, QTabWidget, TableWidget, QVBoxLayout,
                            VBoxLayout,
                            QWidget)
+from designer.resultChr import ResultChr
 from designer.selectInputFile import SelectInputFile
-from designer.step2 import Step2
 from designer.systemTray import SystemTray
 
 
@@ -37,7 +37,7 @@ class Window(QMainWindow):
         self.navigation = Navigation(self)
         self.mainContent = MainContent(self)
         self.selectInputFile = SelectInputFile(self)
-        self.step2 = Step2(self)
+        self.resultChr = ResultChr(self)
 
         self.mainContents = QTabWidget()
         self.mainContents.tabBar().setObjectName("mainTab")
@@ -100,10 +100,13 @@ class Navigation(QScrollArea):
         self.left_label_1.setObjectName('left_label')
         self.left_label_2 = QPushButton("选择文件")
         self.left_label_2.setObjectName('left_label')
-        self.left_label_3 = QPushButton("反馈与帮助")
+        self.left_label_3 = QPushButton("拷贝数变异")
         self.left_label_3.setObjectName('left_label')
-        self.left_label_4 = QLabel()
+        self.left_label_4 = QPushButton("反馈与帮助")
         self.left_label_4.setObjectName('left_label')
+        self.left_label_5 = QLabel()
+        self.left_label_5.setObjectName('left_label')
+
 
         # self.left_label_1.setCheckable(True)
         # self.left_label_1.setChecked(True)
@@ -118,13 +121,15 @@ class Navigation(QScrollArea):
         self.left_layout = QGridLayout(self.left_widget)  # 创建左侧部件的网格布局层
         self.left_layout.addWidget(self.left_label_1, 0, 0, 1, 2)
         self.left_layout.addWidget(self.left_label_2, 1, 0, 1, 2)
-        self.left_layout.addWidget(self.left_label_3, 3, 0, 1, 2)
+        self.left_layout.addWidget(self.left_label_3, 2, 0, 1, 2)
         self.left_layout.addWidget(self.left_label_4, 4, 0, 1, 2)
+        self.left_layout.addWidget(self.left_label_5, 5, 0, 1, 2)
         self.left_layout.setRowStretch(0, 2)
         self.left_layout.setRowStretch(1, 2)
-        self.left_layout.setRowStretch(2, 9)
-        self.left_layout.setRowStretch(3, 2)
-        self.left_layout.setRowStretch(4, 1)
+        self.left_layout.setRowStretch(2, 2)
+        self.left_layout.setRowStretch(3, 7)
+        self.left_layout.setRowStretch(4, 2)
+        self.left_layout.setRowStretch(5, 1)
 
 
 # 主要内容区
