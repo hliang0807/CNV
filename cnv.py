@@ -7,12 +7,13 @@ import logging
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtWidgets import *
 # widgets
-from config.conFigMainShow import ConFigNavigation,ConfigInputFrame,ConfigSettingFrame
+from config.conFigMainShow import ConFigNavigation, ConfigInputFrame, ConfigSettingFrame, ConfigResultChr
 from designer.base import (QApplication, cacheFolder, QDialog, QFrame, QHBoxLayout, HBoxLayout, QIcon, QLabel,
                            QListWidget, QListWidgetItem,
                            QPushButton, PicLabel, QScrollArea, ScrollArea, Qt, QTabWidget, TableWidget, QVBoxLayout,
                            VBoxLayout,
                            QWidget)
+from designer.chooseChr import ChooseChr
 from designer.resultChr import ResultChr
 from designer.selectInputFile import SelectInputFile
 from designer.systemTray import SystemTray
@@ -38,6 +39,7 @@ class Window(QMainWindow):
         self.mainContent = MainContent(self)
         self.selectInputFile = SelectInputFile(self)
         self.resultChr = ResultChr(self)
+        self.chooseChr = ChooseChr(self)
 
         self.mainContents = QTabWidget()
         self.mainContents.tabBar().setObjectName("mainTab")
@@ -58,8 +60,9 @@ class Window(QMainWindow):
         # 将需要切换的窗口做成Tab，并隐藏tabBar，这样方便切换，并且可以做前进后退功能。
         self.mainContents.addTab(self.mainContent, '')
         self.mainContents.addTab(self.selectInputFile, '')
-        self.mainContents.addTab(self.step2, '')
-        self.mainContents.setCurrentIndex(0)
+        self.mainContents.addTab(self.chooseChr, '')
+        self.mainContents.addTab(self.resultChr, '')
+        self.mainContents.setCurrentIndex(3)
 
     def setLayouts(self):
         self.main_layout.addWidget(self.navigation, 0, 0, 12, 2)
@@ -73,6 +76,7 @@ class Window(QMainWindow):
         self.navigationConfig = ConFigNavigation(self.navigation)
         self.configInputFrame = ConfigInputFrame(self.selectInputFile)
         self.configSetting = ConfigSettingFrame(self.mainContent)
+        self.configResultChr=ConfigResultChr(self.resultChr)
 
 
 # 左侧的导航栏
