@@ -62,7 +62,7 @@ class Window(QMainWindow):
         self.mainContents.addTab(self.selectInputFile, '')
         self.mainContents.addTab(self.chooseChr, '')
         self.mainContents.addTab(self.resultChr, '')
-        self.mainContents.setCurrentIndex(3)
+        self.mainContents.setCurrentIndex(0)
 
     def setLayouts(self):
         self.main_layout.addWidget(self.navigation, 0, 0, 12, 2)

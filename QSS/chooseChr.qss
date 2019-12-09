@@ -1,0 +1,4 @@
+QWidget {
+    outline: none;
+    border: none;
+}
