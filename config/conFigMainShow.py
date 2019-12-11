@@ -1,8 +1,12 @@
 import os
+
+import math
 from PyQt5.QtCore import QDir
 from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtGui import *
+from designer.base import QAction, QIcon, QLabel, QObject, pyqtSignal
+from designer.detectionCNV import DetectionCNV
 
-from designer.base import QAction, QMenu, checkFolder, QIcon, QLabel, QObject, RequestThread, QTableWidgetItem, QCursor, pyqtSignal
 
 class ConFigNavigation(QObject):
     def __init__(self, navigation):
@@ -11,6 +15,7 @@ class ConFigNavigation(QObject):
         self.detailFrame = self.navigation.parent.selectInputFile
         self.settingFrame=self.navigation.parent.mainContent
         self.mainContents = self.navigation.parent.mainContents
+        self.resultChrFrame=self.navigation.parent.resultChr
         self.bindConnect()
 
     def bindConnect(self):
@@ -18,6 +23,7 @@ class ConFigNavigation(QObject):
         self.navigation.left_label_1.clicked.connect(self.goSetting)
         self.settingFrame.next_button.clicked.connect(self.goInputFile)
         self.detailFrame.pre_button.clicked.connect(self.goSetting)
+        self.navigation.left_label_3.clicked.connect(self.goResultChr)
 
     def goInputFile(self):
         self.mainContents.setCurrentIndex(1)
@@ -26,6 +32,9 @@ class ConFigNavigation(QObject):
     def goSetting(self):
         self.mainContents.setCurrentIndex(0)
         # self.navigation.left_label_1.setCheckabed(True)
+
+    def goResultChr(self):
+        self.mainContents.setCurrentIndex(3)
 
 
 class ConfigInputFrame(QObject):
@@ -98,6 +107,47 @@ class ConfigSettingFrame(QObject):
         self.mainContent.right_lable7.setToolTip("选取和测试样本距离最近的正常样本作为ref样本集")
         self.mainContent.right_lable8.setToolTip("一个CNV区域最少包含的外显子个数")
         self.mainContent.right_lable9.setToolTip("进程池的进程数")
+
+class ConfigResultChr(QObject):
+    chrLength = [248956422, 242193529, 198295559, 190214555, 181538259, 170805979, 159345973, 145138636, 138394717,
+                 133797422, 135086622, 133275309, 114364328, 107043718, 101991189, 90338345, 83257441, 80373285,
+                 58617616, 64444167, 46709983, 50818468, 156040895, 57227415]
+    def __init__(self,mainContent):
+        super(ConfigResultChr,self).__init__()
+        self.mainContent=mainContent
+        self.detectionCNV = DetectionCNV()
+        self.bind()
+
+    def bind(self):
+        self.mainContent.searchGo.clicked.connect(self.search)
+        self.searchLine=self.mainContent.searchLine
+        self.cnvShow=self.mainContent.cnvShowLabel
+        self.chrLable=self.mainContent.chrLable
+        self.chrLable.goSignal.connect(self.regionShow)
+
+    def search(self):
+        if self.searchLine.text()!="":
+            self.region=self.searchLine.text()
+            pos1=self.region.find(':')
+            pos2=self.region.find('-')
+            chr=int(self.region[3:pos1].strip())-1
+            start=int(self.region[pos1+1:pos2].strip())
+            end=int(self.region[pos2+1:].strip())
+            self.chrLable.x0= int(start * 580/self.chrLength[chr])
+            self.chrLable.x1 = math.ceil(end * 580/self.chrLength[chr])
+            self.chrLable.goButtonEvent()
+            self.regionShow([chr,start,end])
+
+
+    def regionShow(self,searchRegion):
+        searchRegionStr="chr"+str(searchRegion[0]+1)+": "+str(searchRegion[1])+" - "+str(searchRegion[2])
+        self.searchLine.setText(searchRegionStr)
+        region = self.detectionCNV.dealSearchRegion(searchRegion)
+        self.cnvShow.setPixmap(QPixmap("G:\\refMean.png"))
+        self.cnvShow.setScaledContents(True)
+
+
+
 
 
 

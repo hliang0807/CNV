@@ -75,6 +75,7 @@ class DetectionCNV(QThread):
     def __init__(self):
         super().__init__()
         self.dealNpz()
+        self.dealGene()
 
     def dealSearchRegion(self,region):
         chr=region[0]
@@ -152,13 +153,32 @@ class DetectionCNV(QThread):
 
 
 
-
+    def dealGene(self):
+        with open("file/geneUniq.txt") as f1:
+            gene_region = f1.readlines()
+        geneNum=len(gene_region)
+        self.geneChr=[]
+        pre="1"
+        temp = []
+        for i in range(geneNum):
+            ones = gene_region[i].split()
+            print(ones)
+            chr=ones[0]
+            start=int(ones[1])
+            end=int(ones[2])
+            geneName=ones[3]
+            if chr!=pre:
+                self.geneChr.append(temp)
+                temp=[]
+            temp.append([chr, start, end,geneName])
+            pre=chr
+        self.geneChr.append(temp)
 
 
 
 
     def dealNpz(self):
-        npzdata=np.load("G:\\qt_inputfile\\COAD_10A_v2.npz")
+        npzdata=np.load("file/COAD_10A_v2.npz")
         allData = npzdata['allData']
         chromBins = npzdata['chromBins']
         self.chromSum = [0]
@@ -168,9 +188,9 @@ class DetectionCNV(QThread):
             self.chromSum.append(sum)
         del npzdata
 
-        with open("G:\\qt_inputfile\\v2hg38.bed") as f1:
+        with open("file/v2hg38.bed") as f1:
             exome_region = f1.readlines()
-        with open("G:\\qt_inputfile\\gc_v2.txt") as f2:
+        with open("file/gc_v2.txt") as f2:
             gc = f2.readlines()
 
         num = len(exome_region)
@@ -217,7 +237,7 @@ class DetectionCNV(QThread):
         medianSamples = np.median(sumPerSample)
         ref_maskedData = ref_maskedData * 1.0 / sumPerSample * medianSamples
 
-        npzdata_test = np.load("G:\\qt_inputfile\\6137_01A_v2hg38.npz")
+        npzdata_test = np.load("file/6137_01A_v2hg38.npz")
         testsamplesData = npzdata_test['allData']
         del npzdata_test
 

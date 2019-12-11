@@ -30,7 +30,6 @@ QPushButton#left_label:hover{
     font-weight:300;
 }
 
-QPushButton:checked{
-    color:black;
-    background:white;
+QPushButton#left_label:checked{
+    background:#66cccc;
 }

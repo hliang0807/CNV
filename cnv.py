@@ -112,13 +112,15 @@ class Navigation(QScrollArea):
         self.left_label_5.setObjectName('left_label')
 
 
-        # self.left_label_1.setCheckable(True)
-        # self.left_label_1.setChecked(True)
-        # self.left_label_1.setAutoExclusive(True)
-        # self.left_label_2.setAutoExclusive(True)
-        # self.left_label_3.setAutoExclusive(True)
-        # self.left_label_2.setCheckable(True)
-        # self.left_label_3.setCheckable(True)
+
+
+        self.left_label_1.setCheckable(True)
+        self.left_label_1.setChecked(True)
+        self.left_label_1.setAutoExclusive(True)
+        self.left_label_2.setCheckable(True)
+        self.left_label_2.setAutoExclusive(True)
+        self.left_label_3.setAutoExclusive(True)
+        self.left_label_3.setCheckable(True)
 
     def setLayouts(self):
         """设置布局。"""
@@ -134,6 +136,7 @@ class Navigation(QScrollArea):
         self.left_layout.setRowStretch(3, 7)
         self.left_layout.setRowStretch(4, 2)
         self.left_layout.setRowStretch(5, 1)
+        self.left_layout.setContentsMargins(0, 0, 0, 0)
 
 
 # 主要内容区
