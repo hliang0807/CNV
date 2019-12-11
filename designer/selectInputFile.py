@@ -1,6 +1,4 @@
-from designer.base import (ScrollArea, QLabel, QFrame, QVBoxLayout, QPushButton, QHBoxLayout, QTableWidget,
-                           QAbstractItemView)
-from PyQt5 import QtWidgets, QtGui, QtCore
+from designer.base import ScrollArea
 from PyQt5.QtWidgets import *
 
 

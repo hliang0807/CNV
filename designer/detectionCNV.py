@@ -175,7 +175,7 @@ class DetectionCNV(QThread):
         plt.xlabel("外显子")
         plt.ylabel("reads count")
         plt.xticks(x + bar_width / 2, x_data)
-        # plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0)
+        plt.legend(loc='center left', bbox_to_anchor=(0.2, 1.12),ncol=3)
         plt.savefig("temp/refMean.png")
         plt.close()
 

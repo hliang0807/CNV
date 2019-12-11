@@ -1,22 +1,14 @@
-import os
 import sys
-import os.path
-import asyncio
-import logging
 
-from PyQt5 import QtWidgets, QtGui, QtCore
+from PyQt5 import QtGui
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
 # widgets
 from config.conFigMainShow import ConFigNavigation, ConfigInputFrame, ConfigSettingFrame, ConfigResultChr
-from designer.base import (QApplication, cacheFolder, QDialog, QFrame, QHBoxLayout, HBoxLayout, QIcon, QLabel,
-                           QListWidget, QListWidgetItem,
-                           QPushButton, PicLabel, QScrollArea, ScrollArea, Qt, QTabWidget, TableWidget, QVBoxLayout,
-                           VBoxLayout,
-                           QWidget)
 from designer.chooseChr import ChooseChr
 from designer.resultChr import ResultChr
 from designer.selectInputFile import SelectInputFile
-from designer.systemTray import SystemTray
+from designer.base import ScrollArea
 
 
 # 用于承载整个界面。所有窗口的父窗口，所有窗口都可以在父窗口里找到索引。

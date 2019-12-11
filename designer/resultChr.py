@@ -1,11 +1,9 @@
-from designer.base import (ScrollArea, QLabel, QFrame, QVBoxLayout, QPushButton, QHBoxLayout, QTableWidget,
-                           QAbstractItemView)
-from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 import math
 from designer.myLabel import MyLabel
+from designer.base import ScrollArea
 
 
 class ResultChr(ScrollArea):

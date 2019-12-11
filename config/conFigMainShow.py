@@ -1,10 +1,8 @@
 import os
-
 import math
-from PyQt5.QtCore import QDir
-from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-from designer.base import QAction, QIcon, QLabel, QObject, pyqtSignal
+from PyQt5.QtCore import *
 from designer.detectionCNV import DetectionCNV
 
 
@@ -90,7 +88,6 @@ class ConfigInputFrame(QObject):
             self.gcFile=filePath
 
 
-
 class ConfigSettingFrame(QObject):
     def __init__(self,mainContent):
         super(ConfigSettingFrame,self).__init__()
@@ -107,6 +104,7 @@ class ConfigSettingFrame(QObject):
         self.mainContent.right_lable7.setToolTip("选取和测试样本距离最近的正常样本作为ref样本集")
         self.mainContent.right_lable8.setToolTip("一个CNV区域最少包含的外显子个数")
         self.mainContent.right_lable9.setToolTip("进程池的进程数")
+
 
 class ConfigResultChr(QObject):
     chrLength = [248956422, 242193529, 198295559, 190214555, 181538259, 170805979, 159345973, 145138636, 138394717,
@@ -145,14 +143,20 @@ class ConfigResultChr(QObject):
         searchRegionStr="chr"+str(searchRegion[0]+1)+": "+str(searchRegion[1])+" - "+str(searchRegion[2])
         self.searchLine.setText(searchRegionStr)
         region,geneRegion = self.detectionCNV.dealSearchRegion(searchRegion)
-        self.cnvShow.setPixmap(QPixmap("temp/refMean.png"))
+        width=600
+        hight=450
+        # self.cnvShow.setPixmap(QPixmap("temp/refMean.png"))
+        self.cnvShow.setPixmap(QPixmap.fromImage(QImage("temp/refMean.png").
+                                                  scaled(width, hight, Qt.IgnoreAspectRatio, Qt.SmoothTransformation)))
         self.cnvShow.setScaledContents(True)
         geneText=""
         for cur in geneRegion:
             geneText+=cur[3]+"\t"
         self.geneText.setText(geneText)
 
-        self.cnvNum.setPixmap(QPixmap("temp/exonCNV.png"))
+        # self.cnvNum.setPixmap(QPixmap("temp/exonCNV.png"))
+        self.cnvNum.setPixmap(QPixmap.fromImage(QImage("temp/exonCNV.png").
+                                                  scaled(width, hight, Qt.IgnoreAspectRatio, Qt.SmoothTransformation)))
         self.cnvNum.setScaledContents(True)
 
 
