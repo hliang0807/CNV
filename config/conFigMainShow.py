@@ -122,7 +122,9 @@ class ConfigResultChr(QObject):
         self.mainContent.searchGo.clicked.connect(self.search)
         self.searchLine=self.mainContent.searchLine
         self.cnvShow=self.mainContent.cnvShowLabel
+        self.cnvNum = self.mainContent.cnvNumLabel
         self.chrLable=self.mainContent.chrLable
+        self.geneText=self.mainContent.geneText
         self.chrLable.goSignal.connect(self.regionShow)
 
     def search(self):
@@ -142,9 +144,16 @@ class ConfigResultChr(QObject):
     def regionShow(self,searchRegion):
         searchRegionStr="chr"+str(searchRegion[0]+1)+": "+str(searchRegion[1])+" - "+str(searchRegion[2])
         self.searchLine.setText(searchRegionStr)
-        region = self.detectionCNV.dealSearchRegion(searchRegion)
-        self.cnvShow.setPixmap(QPixmap("G:\\refMean.png"))
+        region,geneRegion = self.detectionCNV.dealSearchRegion(searchRegion)
+        self.cnvShow.setPixmap(QPixmap("temp/refMean.png"))
         self.cnvShow.setScaledContents(True)
+        geneText=""
+        for cur in geneRegion:
+            geneText+=cur[3]+"\t"
+        self.geneText.setText(geneText)
+
+        self.cnvNum.setPixmap(QPixmap("temp/exonCNV.png"))
+        self.cnvNum.setScaledContents(True)
 
 
 

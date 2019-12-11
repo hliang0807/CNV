@@ -68,6 +68,12 @@ class ResultChr(ScrollArea):
 
         self.cnvShowLabel=QLabel()
         self.cnvShowLabel.setPixmap(QPixmap(""))
+        self.cnvNumLabel = QLabel()
+        self.cnvNumLabel.setPixmap(QPixmap(""))
+
+        self.geneMessLabel = QLabel("基因名称")
+        self.geneText= QTextEdit()
+        self.geneText.setObjectName("geneText")
 
         self.space1=QLabel()
         self.space2 = QLabel()
@@ -79,23 +85,32 @@ class ResultChr(ScrollArea):
         self.region_layout=QGridLayout()
         self.region_widget = QWidget()
         self.region_widget.setLayout(self.region_layout)
-        self.region_layout.addWidget(self.searchLable,0,1,1,1)
-        self.region_layout.addWidget(self.searchLine, 0, 2, 1, 1)
-        self.region_layout.addWidget(self.searchGo, 0, 3, 1, 1)
+        self.region_layout.addWidget(self.searchLable,0,2,1,1)
+        self.region_layout.addWidget(self.searchLine, 0, 3, 1, 1)
+        self.region_layout.addWidget(self.searchGo, 0, 4, 1, 1)
+        self.region_layout.addWidget(self.space2, 0, 5, 1, 1)
+
         self.region_layout.addWidget(self.chrNumLabel, 1, 0, 1, 1)
-        self.region_layout.addWidget(self.chrLable,1,1,1,3)
-        self.region_layout.addWidget(self.cnvShowLabel,2,0,1,5)
+        self.region_layout.addWidget(self.chrLable,1,1,1,5)
+
+        self.region_layout.addWidget(self.geneMessLabel, 2, 0, 1, 2)
+        self.region_layout.addWidget(self.geneText,2,2,1,3)
+
+        self.region_layout.addWidget(self.cnvShowLabel, 3,0,1,5)
+        self.region_layout.addWidget(self.cnvNumLabel, 4,0,1,5)
         self.region_layout.addWidget(self.space1,1,5,1,1)
 
+
         self.region_layout.setColumnStretch(0, 0.5)
-        self.region_layout.setColumnStretch(1, 1)
-        self.region_layout.setColumnStretch(2, 2)
-        self.region_layout.setColumnStretch(3, 0.5)
-        self.region_layout.setColumnStretch(4, 1)
+        self.region_layout.setColumnStretch(1, 0.5)
+        self.region_layout.setColumnStretch(2, 1)
+        self.region_layout.setColumnStretch(3, 2)
+        self.region_layout.setColumnStretch(4, 0.5)
         self.region_layout.setColumnStretch(5, 1)
         self.region_layout.setRowStretch(0, 1)
         self.region_layout.setRowStretch(1, 1)
-        self.region_layout.setRowStretch(2, 4)
+        self.region_layout.setRowStretch(2, 1)
+        self.region_layout.setRowStretch(3, 4)
         self.mainLayout.addWidget(self.region_widget, 0, 0, 3, 6)
 
 

@@ -101,15 +101,14 @@ class DetectionCNV(QThread):
         searchRegion=[]
         searchIdx=[]
         if curChrRegions[left][2] >= start:
-            searchRegion.append(curChrRegions)
+            searchRegion.append(curChrRegions[left])
             searchIdx.append(left)
         for cur in range(left+1,len(curChrRegions)):
             if curChrRegions[cur][1] <= end:
-                searchRegion.append(curChrRegions)
+                searchRegion.append(curChrRegions[cur])
                 searchIdx.append(cur)
             else:
                 break
-
         searchIdxStart=self.chromSum[chr]
         idx=[]
         region=[]
@@ -120,11 +119,43 @@ class DetectionCNV(QThread):
                 if realIdx in self.gain_idx :
                     idx.append(realIdx)
                     region.append(searchRegion[cur])
-                    flag.append(True)
+                    flag.append(1)
                 elif realIdx in self.loss_idx:
                     idx.append(realIdx)
                     region.append(searchRegion[cur])
-                    flag.append(False)
+                    flag.append(-1)
+
+
+
+        curChrGene = self.geneChr[chr]
+        left = 0
+        right = len(curChrGene) - 1
+        while left < right:
+            mid = (left + right) // 2
+            if start < curChrGene[mid][1]:
+                right = mid
+                if mid > 0 and start > curChrGene[mid - 1][1]:
+                    left = mid - 1
+                    break
+            elif start > curChrGene[mid][1]:
+                left = mid
+                if mid <= right and start < curChrGene[mid + 1][1]:
+                    break
+            else:
+                left = mid
+                break
+        geneRegion = []
+        if curChrGene[left][2] >= start:
+            geneRegion.append(curChrGene[left])
+        for cur in range(left + 1, len(curChrGene)):
+            if curChrGene[cur][1] <= end:
+                geneRegion.append(curChrGene[cur])
+            else:
+                break
+
+
+
+
 
         x_data=[]
         y_refMean=[]
@@ -139,15 +170,42 @@ class DetectionCNV(QThread):
             y_test.append(self.testSample[idx[cur]])
         plt.bar(x, y_refMean,bar_width, label='ref外显子reads count均值',align="center", color='indianred', alpha=0.8)
         plt.bar(x+bar_width, y_test,bar_width, label='test样本外显子reads count',align="center", color='steelblue', alpha=0.8)
-        plt.title("外显子拷贝数变异")
+        plt.title("外显子reads count")
         # 为两条坐标轴设置名称
         plt.xlabel("外显子")
         plt.ylabel("reads count")
         plt.xticks(x + bar_width / 2, x_data)
         # plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0)
-        plt.savefig("G:\\refMean.png")
+        plt.savefig("temp/refMean.png")
         plt.close()
-        return region
+
+
+
+        x_data = []
+        x = np.arange(len(flag))
+        for cur in range(len(flag)):
+            x_data.append(str(cur + 1))
+        plt.bar(x, flag, bar_width*2, label='外显子拷贝数变异', align="center", color='indianred', alpha=0.8)
+        plt.title("外显子拷贝数变异")
+        # 为两条坐标轴设置名称
+        plt.xlabel("外显子")
+        plt.ylabel("外显子拷贝数状态")
+        plt.xticks(x, x_data)
+        ax = plt.gca()
+        ax.spines['right'].set_color('none')
+        ax.spines['top'].set_color('none')
+        ax.xaxis.set_ticks_position('bottom')
+        # ax.yaxis.set_ticks_position('left')
+        ax.spines['bottom'].set_position(('data', 0))
+        # ax.spines['left'].set_position(('data', 0))
+
+
+
+        plt.yticks([1,0,-1], ["扩增","正常","删除"])
+        # plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0)
+        plt.savefig("temp/exonCNV.png")
+        plt.close()
+        return region,geneRegion
 
 
 
@@ -162,7 +220,6 @@ class DetectionCNV(QThread):
         temp = []
         for i in range(geneNum):
             ones = gene_region[i].split()
-            print(ones)
             chr=ones[0]
             start=int(ones[1])
             end=int(ones[2])
