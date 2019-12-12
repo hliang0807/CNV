@@ -59,9 +59,9 @@ class ResultChr(ScrollArea):
         self.chrNumLabel.setObjectName("chrNumLabel")
         self.chrLable=MyLabel()
         self.chrLable.setFixedSize(580,25)
-        chrImg=QImage("resource/chr1.png")
-        self.chrLable.setPixmap(QPixmap.fromImage(chrImg.scaled(self.chrLable.width(),self.chrLable.height(),
-                                                                Qt.IgnoreAspectRatio, Qt.SmoothTransformation)))
+        # chrImg=QImage("resource/chr1.png")
+        # self.chrLable.setPixmap(QPixmap.fromImage(chrImg.scaled(self.chrLable.width(),self.chrLable.height(),
+        #                                                         Qt.IgnoreAspectRatio, Qt.SmoothTransformation)))
         self.chrLable.setScaledContents(True)
 
         self.cnvShowLabel=QLabel()
@@ -73,9 +73,12 @@ class ResultChr(ScrollArea):
         self.geneText= QTextEdit()
         self.geneText.setObjectName("geneText")
 
-        self.space1=QLabel()
-        self.space2 = QLabel()
-        self.space3 = QLabel()
+        self.space1=QPushButton()
+        self.space1.setObjectName("space")
+        self.space2 = QPushButton()
+        self.space2.setObjectName("space")
+        self.space3 = QPushButton()
+        self.space3.setObjectName("space")
 
 
     def setLayouts(self):
@@ -86,17 +89,17 @@ class ResultChr(ScrollArea):
         self.region_layout.addWidget(self.searchLable,0,2,1,1)
         self.region_layout.addWidget(self.searchLine, 0, 3, 1, 1)
         self.region_layout.addWidget(self.searchGo, 0, 4, 1, 1)
-        self.region_layout.addWidget(self.space2, 0, 5, 1, 1)
+        self.region_layout.addWidget(self.space1, 0, 5, 1, 1)
 
         self.region_layout.addWidget(self.chrNumLabel, 1, 0, 1, 1)
-        self.region_layout.addWidget(self.chrLable,1,1,1,5)
+        self.region_layout.addWidget(self.chrLable, 1, 1, 1, 5)
+
 
         self.region_layout.addWidget(self.geneMessLabel, 2, 0, 1, 2)
         self.region_layout.addWidget(self.geneText,2,2,1,3)
 
         self.region_layout.addWidget(self.cnvShowLabel, 3,0,1,5)
         self.region_layout.addWidget(self.cnvNumLabel, 4,0,1,5)
-        self.region_layout.addWidget(self.space1,1,5,1,1)
 
 
         self.region_layout.setColumnStretch(0, 0.5)
@@ -104,12 +107,13 @@ class ResultChr(ScrollArea):
         self.region_layout.setColumnStretch(2, 1)
         self.region_layout.setColumnStretch(3, 2)
         self.region_layout.setColumnStretch(4, 0.5)
-        self.region_layout.setColumnStretch(5, 1)
+        self.region_layout.setColumnStretch(5, 0.8)
+        self.region_layout.setColumnStretch(6, 0.1)
         self.region_layout.setRowStretch(0, 1)
         self.region_layout.setRowStretch(1, 1)
         self.region_layout.setRowStretch(2, 1)
         self.region_layout.setRowStretch(3, 4)
-        self.mainLayout.addWidget(self.region_widget, 0, 0, 3, 6)
+        self.mainLayout.addWidget(self.region_widget, 0, 0, 4, 7)
 
 
 

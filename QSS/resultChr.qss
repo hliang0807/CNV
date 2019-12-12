@@ -1,3 +1,7 @@
 QScrollArea {
     border: none;
 }
+
+QPushButton#space{
+        border:none;
+}

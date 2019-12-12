@@ -4,8 +4,10 @@ from PyQt5 import QtGui
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
 # widgets
-from config.conFigMainShow import ConFigNavigation, ConfigInputFrame, ConfigSettingFrame, ConfigResultChr
+from config.conFigMainShow import ConFigNavigation, ConfigInputFrame, ConfigSettingFrame, ConfigResultChr, \
+    ConfigChooseChr
 from designer.chooseChr import ChooseChr
+from designer.detectionCNV import DetectionCNV
 from designer.resultChr import ResultChr
 from designer.selectInputFile import SelectInputFile
 from designer.base import ScrollArea
@@ -32,7 +34,7 @@ class Window(QMainWindow):
         self.selectInputFile = SelectInputFile(self)
         self.resultChr = ResultChr(self)
         self.chooseChr = ChooseChr(self)
-
+        self.detectionCNV = DetectionCNV()
         self.mainContents = QTabWidget()
         self.mainContents.tabBar().setObjectName("mainTab")
 
@@ -69,6 +71,8 @@ class Window(QMainWindow):
         self.configInputFrame = ConfigInputFrame(self.selectInputFile)
         self.configSetting = ConfigSettingFrame(self.mainContent)
         self.configResultChr=ConfigResultChr(self.resultChr)
+        self.configChooseChr=ConfigChooseChr(self.chooseChr)
+
 
 
 # 左侧的导航栏

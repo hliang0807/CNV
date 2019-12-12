@@ -21,21 +21,23 @@ class MyLabel(QLabel):
     def mousePressEvent(self,event):
         self.flag = True
         self.x0 = event.x()
-        # print(self.mapToGlobal(QPoint(0,0)))
+
 
     #鼠标释放事件
     def mouseReleaseEvent(self,event):
         self.flag = False
-        self.start = int(chrLength[self.chrNum] * self.x0 / 580)
-        self.end = math.ceil(chrLength[self.chrNum] * self.x1 / 580)
+        self.x1 = event.x()
+        if self.x0==self.x1:
+            self.x0=max(0,self.x0-1)
+            self.x1=min(self.x1+1,chrLength[self.chrNum]-1)
+            self.update()
+        self.start = round(chrLength[self.chrNum] * self.x0 / 580)
+        self.end = round(chrLength[self.chrNum] * self.x1 / 580)
         if self.start > self.end:
             temp = self.start
             self.start = self.end
             self.end = temp
-        self.goSignal.emit([self.chrNum,self.start,self.end])
-
-
-
+        self.goSignal.emit([self.chrNum, self.start, self.end])
 
 
 
@@ -57,6 +59,7 @@ class MyLabel(QLabel):
         painter = QPainter(self)
         painter.setPen(QPen(Qt.red, 2, Qt.SolidLine))
         painter.drawRect(rect)
+
 
 
 

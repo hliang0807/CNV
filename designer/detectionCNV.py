@@ -156,55 +156,53 @@ class DetectionCNV(QThread):
 
 
 
-
-        x_data=[]
-        y_refMean=[]
-        y_refMedian = []
-        y_test=[]
-        x=np.arange(len(idx))
-        bar_width = 0.35
-        for cur in range(len(idx)):
-            x_data.append(str(cur+1))
-            y_refMean.append(self.refMean[idx[cur]])
-            y_refMedian.append(self.refMedian[idx[cur]])
-            y_test.append(self.testSample[idx[cur]])
-        plt.bar(x, y_refMean,bar_width, label='ref外显子reads count均值',align="center", color='indianred', alpha=0.8)
-        plt.bar(x+bar_width, y_test,bar_width, label='test样本外显子reads count',align="center", color='steelblue', alpha=0.8)
-        plt.title("外显子reads count")
-        # 为两条坐标轴设置名称
-        plt.xlabel("外显子")
-        plt.ylabel("reads count")
-        plt.xticks(x + bar_width / 2, x_data)
-        plt.legend(loc='center left', bbox_to_anchor=(0.2, 1.12),ncol=3)
-        plt.savefig("temp/refMean.png")
-        plt.close()
-
-
-
-        x_data = []
-        x = np.arange(len(flag))
-        for cur in range(len(flag)):
-            x_data.append(str(cur + 1))
-        plt.bar(x, flag, bar_width*2, label='外显子拷贝数变异', align="center", color='indianred', alpha=0.8)
-        plt.title("外显子拷贝数变异")
-        # 为两条坐标轴设置名称
-        plt.xlabel("外显子")
-        plt.ylabel("外显子拷贝数状态")
-        plt.xticks(x, x_data)
-        ax = plt.gca()
-        ax.spines['right'].set_color('none')
-        ax.spines['top'].set_color('none')
-        ax.xaxis.set_ticks_position('bottom')
-        # ax.yaxis.set_ticks_position('left')
-        ax.spines['bottom'].set_position(('data', 0))
-        # ax.spines['left'].set_position(('data', 0))
+        if len(idx)>0:
+            x_data=[]
+            y_refMean=[]
+            y_refMedian = []
+            y_test=[]
+            x=np.arange(len(idx))
+            bar_width = 0.35
+            for cur in range(len(idx)):
+                x_data.append(str(cur+1))
+                y_refMean.append(self.refMean[idx[cur]])
+                y_refMedian.append(self.refMedian[idx[cur]])
+                y_test.append(self.testSample[idx[cur]])
+            plt.bar(x, y_refMean,bar_width, label='ref外显子reads count均值',align="center", color='indianred', alpha=0.8)
+            plt.bar(x+bar_width, y_test,bar_width, label='test样本外显子reads count',align="center", color='steelblue', alpha=0.8)
+            plt.title("外显子reads count")
+            # 为两条坐标轴设置名称
+            plt.xlabel("外显子")
+            plt.ylabel("reads count")
+            plt.xticks(x + bar_width / 2, x_data)
+            plt.legend(loc='center left', bbox_to_anchor=(0.2, 1.12),ncol=3)
+            plt.savefig("temp/refMean.png")
+            plt.close()
 
 
 
-        plt.yticks([1,0,-1], ["扩增","正常","删除"])
-        # plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0)
-        plt.savefig("temp/exonCNV.png")
-        plt.close()
+        if len(flag)>0:
+            x_data = []
+            x = np.arange(len(flag))
+            for cur in range(len(flag)):
+                x_data.append(str(cur + 1))
+            plt.bar(x, flag, bar_width*2, label='外显子拷贝数变异', align="center", color='indianred', alpha=0.8)
+            plt.title("外显子拷贝数变异")
+            # 为两条坐标轴设置名称
+            plt.xlabel("外显子")
+            plt.ylabel("外显子拷贝数状态")
+            plt.xticks(x, x_data)
+            ax = plt.gca()
+            ax.spines['right'].set_color('none')
+            ax.spines['top'].set_color('none')
+            ax.xaxis.set_ticks_position('bottom')
+            # ax.yaxis.set_ticks_position('left')
+            ax.spines['bottom'].set_position(('data', 0))
+            # ax.spines['left'].set_position(('data', 0))
+            plt.yticks([1,0,-1], ["扩增","正常","删除"])
+            # plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0)
+            plt.savefig("temp/exonCNV.png")
+            plt.close()
         return region,geneRegion
 
 
