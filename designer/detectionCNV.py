@@ -116,14 +116,15 @@ class DetectionCNV(QThread):
         for cur in range(len(searchIdx)):
             realIdx = searchIdx[cur]+searchIdxStart
             if self.mask[realIdx]:
+                idx.append(realIdx)
+                region.append(searchRegion[cur])
                 if realIdx in self.gain_idx :
-                    idx.append(realIdx)
-                    region.append(searchRegion[cur])
                     flag.append(1)
                 elif realIdx in self.loss_idx:
-                    idx.append(realIdx)
-                    region.append(searchRegion[cur])
                     flag.append(-1)
+                else:
+                    flag.append(0)
+
 
 
 
@@ -166,7 +167,6 @@ class DetectionCNV(QThread):
             for cur in range(len(idx)):
                 x_data.append(str(cur+1))
                 y_refMean.append(self.refMean[idx[cur]])
-                y_refMedian.append(self.refMedian[idx[cur]])
                 y_test.append(self.testSample[idx[cur]])
             plt.bar(x, y_refMean,bar_width, label='ref外显子reads count均值',align="center", color='indianred', alpha=0.8)
             plt.bar(x+bar_width, y_test,bar_width, label='test样本外显子reads count',align="center", color='steelblue', alpha=0.8)
@@ -276,7 +276,7 @@ class DetectionCNV(QThread):
         ref_maskedData = allData[mask, :]
         sumPerSample = np.sum(ref_maskedData, 0)
         medianSamples = np.median(sumPerSample)
-        tmpdata = allData * 1.0 / sumPerSample * medianSamples
+        tmpdata = allData / sumPerSample * medianSamples
         tmp_std = np.std(tmpdata, axis=1)
         tmp_mean = np.mean(tmpdata, axis=1)
         for i in range(allData.shape[0]):
@@ -290,7 +290,7 @@ class DetectionCNV(QThread):
         ref_maskedData = allData[mask, :]
         sumPerSample = np.sum(ref_maskedData, 0)
         medianSamples = np.median(sumPerSample)
-        ref_maskedData = ref_maskedData * 1.0 / sumPerSample * medianSamples
+        ref_maskedData = ref_maskedData / sumPerSample * medianSamples
 
         npzdata_test = np.load("file/6137_01A_v2hg38.npz")
         testsamplesData = npzdata_test['allData']
@@ -298,7 +298,7 @@ class DetectionCNV(QThread):
 
         testsamplesData = testsamplesData[mask, :]
         testSumReads = np.sum(testsamplesData, 0)
-        testsamplesData = testsamplesData * 1.0 / testSumReads * medianSamples
+        testsamplesData = testsamplesData / testSumReads * medianSamples
         refsamples_num = ref_maskedData.shape[1]
         testsamples_num = testsamplesData.shape[1]
         for i_testsample in range(testsamples_num):
@@ -317,8 +317,8 @@ class DetectionCNV(QThread):
             maskedData = ref_maskedData[:, samples_mask]
 
             self.refMean=[]
-            self.refMedian = []
-            maskedData_median = np.median(maskedData, axis=1)
+            # self.refMedian = []
+            # maskedData_median = np.median(maskedData, axis=1)
             maskedData_mean = np.mean(maskedData, axis=1)
             self.testSample=[]
             self.mask = mask
@@ -326,12 +326,12 @@ class DetectionCNV(QThread):
             for i in range(sum):
                 if mask[i]:
                     self.refMean.append(maskedData_mean[j])
-                    self.refMedian.append(maskedData_median[j])
+                    # self.refMedian.append(maskedData_median[j])
                     self.testSample.append(testData[j])
                     j+=1
                 else:
                     self.refMean.append(0)
-                    self.refMedian.append(0)
+                    # self.refMedian.append(0)
                     self.testSample.append(0)
 
 
