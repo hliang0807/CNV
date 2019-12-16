@@ -214,6 +214,7 @@ class DetectionCNV(QThread):
             gene_region = f1.readlines()
         geneNum=len(gene_region)
         self.geneChr=[]
+        self.geneDic={}
         pre="1"
         temp = []
         for i in range(geneNum):
@@ -222,6 +223,7 @@ class DetectionCNV(QThread):
             start=int(ones[1])
             end=int(ones[2])
             geneName=ones[3]
+            self.geneDic[ones[3]] = [chr, start, end]
             if chr!=pre:
                 self.geneChr.append(temp)
                 temp=[]

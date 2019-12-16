@@ -252,8 +252,10 @@ class ConfigResultChr(QObject):
         self.searchLine = self.mainContent.searchLine
         self.cnvShow = self.mainContent.cnvShowLabel
         self.cnvNum = self.mainContent.cnvNumLabel
+        self.chrNumLabel = self.mainContent.chrNumLabel
         self.chrLable = self.mainContent.chrLable
         self.geneText = self.mainContent.geneText
+        self.geneSearchFlag=False
         self.bind()
 
     def bind(self):
@@ -262,12 +264,28 @@ class ConfigResultChr(QObject):
 
     def search(self):
         if self.searchLine.text()!="":
-            self.region=self.searchLine.text()
-            pos1=self.region.find(':')
-            pos2=self.region.find('-')
-            chr=int(self.region[3:pos1].strip())-1
-            start=int(self.region[pos1+1:pos2].strip())
-            end=int(self.region[pos2+1:].strip())
+            self.region = self.searchLine.text().strip()
+            if self.region in self.detectionCNV.geneDic:
+                self.geneSearchFlag=True
+                region=self.detectionCNV.geneDic[self.region]
+                if region[0]=="X":
+                    chr=22
+                elif region[0]=="Y":
+                    chr=23
+                else:
+                    chr=int(region[0])-1
+                start=region[1]
+                end=region[2]
+                self.chrNumLabel.setText("chr" + region[0])
+                chrImg = QImage("resource/chr" + str(chr+1) + ".png")
+                self.chrLable.setPixmap(QPixmap.fromImage(chrImg.scaled(self.chrLable.width(), self.chrLable.height(),
+                                                                        Qt.IgnoreAspectRatio, Qt.SmoothTransformation)))
+            else:
+                pos1=self.region.find(':')
+                pos2=self.region.find('-')
+                chr=int(self.region[3:pos1].strip())-1
+                start=int(self.region[pos1+1:pos2].strip())
+                end=int(self.region[pos2+1:].strip())
             self.chrLable.x0= round(start * 580/chrLength[chr])
             self.chrLable.x1 = round(end * 580/chrLength[chr])
             self.chrLable.goButtonEvent()
@@ -276,6 +294,8 @@ class ConfigResultChr(QObject):
 
     def regionShow(self,searchRegion):
         searchRegionStr="chr"+str(searchRegion[0]+1)+": "+str(searchRegion[1])+" - "+str(searchRegion[2])
+        if self.geneSearchFlag:
+            searchRegionStr=self.region+"  "+searchRegionStr
         self.searchLine.setText(searchRegionStr)
         region, geneRegion = self.detectionCNV.dealSearchRegion(searchRegion)
         width=600

@@ -22,7 +22,7 @@ class ResultChr(ScrollArea):
         self.setLayouts()
 
     def setLabels(self):
-        self.searchLable=QLabel("请输入基因组区域")
+        self.searchLable=QLabel("请输入基因组区域或基因名")
         self.searchLable.setObjectName("searchLable")
         # self.searchCB=QComboBox()
         # self.searchCB.setObjectName("searchComboBox")
