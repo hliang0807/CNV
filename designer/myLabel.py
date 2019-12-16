@@ -1,8 +1,6 @@
-import math
 from PyQt5.QtWidgets import QLabel
-from PyQt5.QtCore import QRect, Qt, QPoint, pyqtSignal
+from PyQt5.QtCore import QRect, Qt, pyqtSignal
 from PyQt5.QtGui import QPainter, QPen
-import cv2
 
 
 chrLength=[248956422,242193529,198295559,190214555,181538259,170805979,159345973,145138636, 138394717,

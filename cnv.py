@@ -74,7 +74,6 @@ class Window(QMainWindow):
         self.configChooseChr=ConfigChooseChr(self.chooseChr)
 
 
-
 # 左侧的导航栏
 class Navigation(QScrollArea):
     def __init__(self, parent=None):

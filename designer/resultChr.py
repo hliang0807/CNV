@@ -1,7 +1,5 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-from PyQt5.QtCore import *
-import math
 from designer.myLabel import MyLabel
 from designer.base import ScrollArea
 
