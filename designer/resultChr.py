@@ -69,6 +69,7 @@ class ResultChr(ScrollArea):
 
         self.geneMessLabel = QLabel("基因名称")
         self.geneText= QTextEdit()
+        self.geneText.setReadOnly(True)
         self.geneText.setObjectName("geneText")
 
         self.space1=QPushButton()

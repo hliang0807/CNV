@@ -3,6 +3,7 @@ import math
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+import re
 chrLength = [248956422, 242193529, 198295559, 190214555, 181538259, 170805979, 159345973, 145138636, 138394717,
                  133797422, 135086622, 133275309, 114364328, 107043718, 101991189, 90338345, 83257441, 80373285,
                  58617616, 64444167, 46709983, 50818468, 156040895, 57227415]
@@ -254,7 +255,6 @@ class ConfigResultChr(QObject):
         self.chrNumLabel = self.mainContent.chrNumLabel
         self.chrLable = self.mainContent.chrLable
         self.geneText = self.mainContent.geneText
-        self.geneSearchFlag=False
         self.bind()
 
     def bind(self):
@@ -291,10 +291,9 @@ class ConfigResultChr(QObject):
             self.regionShow([chr,start,end])
 
 
+
     def regionShow(self,searchRegion):
         searchRegionStr="chr"+str(searchRegion[0]+1)+": "+str(searchRegion[1])+" - "+str(searchRegion[2])
-        if self.geneSearchFlag:
-            searchRegionStr=self.region+"  "+searchRegionStr
         self.searchLine.setText(searchRegionStr)
         region, geneRegion = self.detectionCNV.dealSearchRegion(searchRegion)
         width=600

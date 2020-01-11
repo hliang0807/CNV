@@ -25,7 +25,7 @@ class SelectInputFile(ScrollArea):
     def setLabels(self):
         self.file_button1 = QPushButton("浏览...")
         self.file_button1.setObjectName('right_file_button')
-        self.file_lable1 = QLabel("第一步：导入正常样本的bam文件")
+        self.file_lable1 = QLabel("第一步：导入正常样本集测序数据的存储路径")
         self.file_lable1.setObjectName('right_step_lable')
         self.file_path1 = QLabel("未选择文件")
         self.file_path1.setObjectName('right_file_lable')
